@@ -2,8 +2,6 @@ io.on('connection', function(socket){
 	socket.emit("login");
 
 	socket.on("login", function(data){
-		console.log(data);
-		//PSEUDO / SKIN
 		var id = playerIdGenerator.get();
 		var player = new Player({
 			id:id,
@@ -11,7 +9,11 @@ io.on('connection', function(socket){
 			socket:socket.id
 		});
 
+		socket.emit("playerID", id);
 		game.addPlayer(player);
+
+		var room = game.getAccessibleRoom();
+		room.addPlayer(player);
 	});
 
 	socket.on("respawn", function(data){

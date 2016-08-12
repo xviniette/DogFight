@@ -25,7 +25,10 @@ Game.prototype.removePlayer = function(player){
 }
 
 Game.prototype.newRoom = function(){
-
+	var id = roomIdGenerator.get();
+	var room = new Room();
+	this.rooms[id] = room;
+	return room;
 }
 
 Game.prototype.deleteRoom = function(){
@@ -57,7 +60,7 @@ Game.prototype.getRoom = function(id){
 
 Game.prototype.getAccessibleRoom = function(){
 	for(var i in this.rooms){
-		if(this.rooms[i].player.length < MAX_PLAYER){
+		if(!this.rooms[i].isFull()){
 			return this.rooms[i];
 		}
 	}

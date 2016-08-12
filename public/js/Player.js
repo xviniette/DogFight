@@ -37,3 +37,34 @@ Player.prototype.init = function(json){
 		this[i] = json[i];
 	}
 }
+
+Player.prototype.update = function(){
+	
+}
+
+Player.prototype.getInformations = function(){
+	var datas = {
+		id:this.id,
+		pseudo:this.pseudo,
+		position:this.position,
+		rotation:this.rotation,
+		radius:this.radius,
+		speed:this.speed,
+		life:this.life,
+		alive:this.alive,
+		kills:this.kills,
+		deaths:this.deaths
+	};
+
+	return datas;
+}
+
+Player.prototype.getSnapshot = function(){
+	var datas = {
+		id:this.id,
+		position:this.position,
+		rotation:this.rotation,
+	};
+
+	return datas;
+}
