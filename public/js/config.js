@@ -1,0 +1,3 @@
+var FPS = 60;
+var NETWORK_FPS = 10;
+var INTERPOLATION = Math.floor(1000/NETWORK_FPS * 1.5);
