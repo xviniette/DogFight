@@ -1,6 +1,6 @@
 var Game = function(json){
 	this.players = {};
-	this.rooms = [];
+	this.rooms = {};
 
 	this.init(json);
 }
@@ -26,6 +26,43 @@ Game.prototype.removePlayer = function(player){
 
 Game.prototype.newRoom = function(){
 
+}
+
+Game.prototype.deleteRoom = function(){
+
+}
+
+Game.prototype.getPlayerBySocket = function(socket){
+	if(this.players[socket]){
+		return this.players[socket];
+	}
+	return null;
+}
+
+Game.prototype.getPlayerById = function(id){
+	for(var i in this.players){
+		if(this.players[i].id == id){
+			return this.players[i];
+		}
+	}
+	return null;
+}
+
+Game.prototype.getRoom = function(id){
+	if(this.rooms[id]){
+		return this.rooms[i];
+	}
+	return null;
+}
+
+Game.prototype.getAccessibleRoom = function(){
+	for(var i in this.rooms){
+		if(this.rooms[i].player.length < MAX_PLAYER){
+			return this.rooms[i];
+		}
+	}
+	//new room
+	return this.newRoom();
 }
 
 Game.prototype.nbPlayers = function(){
