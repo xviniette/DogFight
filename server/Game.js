@@ -11,9 +11,10 @@ Game.prototype.init = function(json){
 	}
 }
 
-
-Game.prototype.start = function(){
-
+Game.prototype.update = function(){
+	for(var i in this.rooms){
+		this.rooms[i].update();
+	}
 }
 
 Game.prototype.addPlayer = function(player){
@@ -64,7 +65,7 @@ Game.prototype.getAccessibleRoom = function(){
 			return this.rooms[i];
 		}
 	}
-	//new room
+
 	return this.newRoom();
 }
 

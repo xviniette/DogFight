@@ -17,6 +17,10 @@ var playerIdGenerator = new UniqueNumber(1);
 var roomIdGenerator = new UniqueNumber(1);
 var game = new Game();
 
+setInterval(function(){
+	game.update();
+}, 1000/FPS);
+
 
 eval(fs.readFileSync('./server/socket.js')+'');
 

@@ -1,6 +1,9 @@
 var Room = function(){
 	this.id = 0;
 	this.players = {};
+
+	this.lastUpdatePhysic = Date.now();
+	this.lastUpdateNetwork = Date.now();
 }
 
 Room.prototype.init = function(json){
@@ -10,10 +13,33 @@ Room.prototype.init = function(json){
 }
 
 Room.prototype.update = function(){
+	var now = Date.now();
+	var d = 1/FPS * 1000;
+	while(now - this.lastUpdatePhysic >= d){
+		this.physic();
+		this.lastUpdatePhysic += d;
+	}
+
+	var dn = 1/NETWORK_FPS * 1000;
+	while(now - this.lastUpdateNetwork >= dn){
+		this.snapshot();
+		this.lastUpdateNetwork += dn;
+	}
+}
+
+Room.prototype.physic = function(){
 
 }
 
+Room.prototype.snapshot = function(){
+	var snapshot = this.getSnapshot();
+	for(var i in this.players){
+		Utils.msgTo(this.players[i].socket, "snapshot", snapshot);
+	}
+}
+
 Room.prototype.addPlayer = function(player){
+	player.room = this;
 	this.players[player.id] = player;
 
 	if(IS_SERVER){
@@ -28,6 +54,7 @@ Room.prototype.addPlayer = function(player){
 }
 
 Room.prototype.removePlayer = function(player){
+	player.room = null;
 	delete this.players[player.id];
 
 	if(IS_SERVER){
@@ -38,7 +65,7 @@ Room.prototype.removePlayer = function(player){
 }
 
 Room.prototype.isFull = function(){
-	return Object.keys(this.players).length > MAX_PLAYER; 
+	return Object.keys(this.players).length >= MAX_PLAYER; 
 }
 
 Room.prototype.getInformations = function(){
