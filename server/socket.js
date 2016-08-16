@@ -2,6 +2,9 @@ io.on('connection', function(socket){
 	socket.emit("login");
 
 	socket.on("login", function(data){
+		if(game.getPlayerBySocket(socket.id) != null){
+			return;
+		}
 		var id = playerIdGenerator.get();
 		var player = new Player({
 			id:id,
@@ -31,6 +34,10 @@ io.on('connection', function(socket){
 	socket.on("disconnect", function(){
 		var player = game.getPlayerBySocket(socket.id);
 		if(player){
+			if(player.room){
+				player.room.removePlayer(player);
+			}
+			game.removePlayer(player);
 			playerIdGenerator.free(player.id);
 		}
 	});

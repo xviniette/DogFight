@@ -27,13 +27,14 @@ Game.prototype.removePlayer = function(player){
 
 Game.prototype.newRoom = function(){
 	var id = roomIdGenerator.get();
-	var room = new Room();
+	var room = new Room({id:id});
 	this.rooms[id] = room;
 	return room;
 }
 
-Game.prototype.deleteRoom = function(){
-
+Game.prototype.deleteRoom = function(id){
+	delete this.rooms[id];
+	roomIdGenerator.free(id);
 }
 
 Game.prototype.getPlayerBySocket = function(socket){

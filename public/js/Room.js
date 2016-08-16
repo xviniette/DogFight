@@ -1,9 +1,13 @@
-var Room = function(){
+var Room = function(json){
 	this.id = 0;
 	this.players = {};
 
+	this.seed = Math.floor(Math.random() * 1000000000);
+
 	this.lastUpdatePhysic = Date.now();
 	this.lastUpdateNetwork = Date.now();
+
+	this.init(json);
 }
 
 Room.prototype.init = function(json){
@@ -59,13 +63,21 @@ Room.prototype.removePlayer = function(player){
 
 	if(IS_SERVER){
 		for(var i in this.players){
-			tils.msgTo(this.players[i].socket, "removePlayer", {id:player.id});
+			Utils.msgTo(this.players[i].socket, "removePlayer", {id:player.id});
+		}
+
+		if(this.nbPlayers() == 0){
+			game.deleteRoom(this.id);
 		}
 	}
 }
 
+Room.prototype.nbPlayers = function(){
+	return Object.keys(this.players).length; 
+}
+
 Room.prototype.isFull = function(){
-	return Object.keys(this.players).length >= MAX_PLAYER; 
+	return this.nbPlayers() >= MAX_PLAYER; 
 }
 
 Room.prototype.getInformations = function(){
@@ -77,6 +89,7 @@ Room.prototype.getInformations = function(){
 
 	var datas = {
 		id:this.id,
+		seed:this.seed,
 		players:ps
 	};
 

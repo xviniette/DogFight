@@ -14,9 +14,8 @@ var Player = function(json){
 	};
 
 	this.rotation = {
-		x:0,
-		y:0,
-		z:0
+		h:0,
+		v:0
 	};
 
 	this.speed = 5;
