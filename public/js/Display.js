@@ -59,6 +59,27 @@ Display.prototype.updateSkybox = function(){
 	this.skybox.position.z = this.three.camera.position.z;
 }
 
+Display.prototype.initGround = function(){
+	var ground = this.client.room.map.ground;
+	console.log(ground);
+
+	var geometry = new THREE.PlaneGeometry(500, 500, ground.length - 1, ground[0].length - 1);
+
+	for (var i = 0, l = geometry.vertices.length; i < l; i++) {
+  		geometry.vertices[i].y = Math.random() * 100;
+	}
+
+	var material = new THREE.MeshLambertMaterial({
+  color: 0xdddddd, 
+});
+
+var plane = new THREE.Mesh(geometry, material);
+plane.position.z += 800;
+plane.rotation.y = 2;
+
+	this.three.scene.add(plane);
+}
+
 Display.prototype.init = function(){
 	var container = $('#webgl');
 
@@ -72,7 +93,7 @@ Display.prototype.init = function(){
 	FAR = 1000000;
 
 
-	this.three.renderer = new THREE.WebGLRenderer();
+	this.three.renderer = new THREE.WebGLRenderer({ antialias: true });
 	this.three.camera = new THREE.PerspectiveCamera(
 		VIEW_ANGLE,
 		ASPECT,
@@ -91,23 +112,59 @@ Display.prototype.init = function(){
 		'model/plane.obj',
 		function ( object ) {
 			_this.plane = object;
-			_this.plane.position.z = -5000;
 			_this.three.scene.add(_this.plane);
 		}
 		);
 
-	var pointLight =
-	new THREE.PointLight(0xFFFFFF);
+	//LUMIERE
 
-	pointLight.position.x = 10;
-	pointLight.position.y = 50;
-	pointLight.position.z = 130;
+	var hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
+            hemiLight.color.setHSL( 0.6, 0.75, 0.5 );
+            hemiLight.groundColor.setHSL( 0.095, 0.5, 0.5 );
+            hemiLight.position.set( 0, 500, 0 );
 
-	this.three.scene.add(pointLight);
+            //this.three.scene.add(hemiLight);
+
+              var dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
+            dirLight.position.set( -1, 0.75, 1 );
+            dirLight.position.multiplyScalar( 50);
+            dirLight.name = "dirlight";
+
+            this.three.scene.add(dirLight);
+
+
+	// var pointLight =
+	// new THREE.PointLight(0xFFFFFF);
+
+	// pointLight.position.x = 10;
+	// pointLight.position.y = 300;
+	// pointLight.position.z = 130;
+
+	// this.three.scene.add(pointLight);
 
 	this.three.renderer.setSize(WIDTH, HEIGHT);
 
 	this.initSkybox();
+	this.initGround();
+
+var radius = 500,
+    segments = 16,
+    rings = 16;
+var sphere = new THREE.Mesh(
+
+  new THREE.SphereGeometry(
+    radius,
+    segments,
+    rings),
+
+  new THREE.MeshLambertMaterial(
+    {
+      color: 0xCC0000
+    }));
+
+sphere.position.y -= 300;
+
+	// this.three.scene.add(sphere);
 
 	container.append(this.three.renderer.domElement);
 }
@@ -118,7 +175,6 @@ Display.prototype.render = function(){
 		this.plane.rotation.y += 0.1;
 	}
 	this.three.camera.position.z += 100;
-	this.three.camera.rotation.y += 0.02;
 
 
 	this.updateSkybox();

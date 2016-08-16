@@ -1,6 +1,6 @@
 var Client = function(){
 	this.pid;
-	this.room;
+	this.room = new Room();
 	this.display = new Display(this);
 }
 

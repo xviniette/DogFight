@@ -4,6 +4,8 @@ var Room = function(json){
 
 	this.seed = Math.floor(Math.random() * 1000000000);
 
+	this.map = new Map();
+
 	this.lastUpdatePhysic = Date.now();
 	this.lastUpdateNetwork = Date.now();
 
