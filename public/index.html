@@ -12,7 +12,7 @@
 <div class="connexion" v-if="!connected">
 	<h1>DogFight.io</h1>
 	<form v-on:submit.prevent="connection">
-		<input type="text" v-model="pseudo">
+		<input type="text" v-model="pseudo" maxlength="20">
 		<input type="submit" value="Play">
 	</form>
 </div>

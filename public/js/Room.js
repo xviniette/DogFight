@@ -48,6 +48,8 @@ Room.prototype.addPlayer = function(player){
 	player.room = this;
 	this.players[player.id] = player;
 
+	player.spawn();
+
 	if(IS_SERVER){
 		Utils.msgTo(player.socket, "init", this.getInformations());
 		var pInformations = player.getInformations();
@@ -56,11 +58,14 @@ Room.prototype.addPlayer = function(player){
 				Utils.msgTo(this.players[i].socket, "addPlayer", pInformations);
 			}
 		}
+	}else{
+		client.display.addPlayer(player);
 	}
 }
 
 Room.prototype.removePlayer = function(player){
 	player.room = null;
+	var p = this.players[player.id];
 	delete this.players[player.id];
 
 	if(IS_SERVER){
@@ -71,6 +76,8 @@ Room.prototype.removePlayer = function(player){
 		if(this.nbPlayers() == 0){
 			game.deleteRoom(this.id);
 		}
+	}else{
+		client.display.removePlayer(p);
 	}
 }
 

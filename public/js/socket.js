@@ -16,17 +16,21 @@ $(function(){
 			room.addPlayer(new Player(data.players[i]));
 		}
 		client.room = room;
-		console.log(client);
 	});
 
 	socket.on("snapshot", function(data){
 	});
 
 	socket.on("addPlayer", function(data){
+		client.room.addPlayer(new Player(data));
 	});
 
 	socket.on("removePlayer", function(data){
+		client.room.removePlayer(data);
 	});
 
+	socket.on("nbPlayers", function(data){
+		console.log("nb players", data);
+	});
 	
 });

@@ -13,14 +13,22 @@ $(function(){
 	vue = new Vue({
 		el:"#app",
 		data:{
-			pseudo:"",
+			pseudo:localStorage.getItem("pseudo") || "",
 			connected:false
 		},
 		methods:{
 			connection:function(){
 				socket.emit("login", {pseudo:this.pseudo});
+				localStorage.setItem("pseudo", this.pseudo);
 			}
 		}
 	});
+
+
+	window.onresize = function(){
+		if(client){
+			client.display.windowResize();
+		}
+	}
 
 });

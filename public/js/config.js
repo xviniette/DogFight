@@ -1,4 +1,4 @@
 var FPS = 60;
-var NETWORK_FPS = 0.2;
+var NETWORK_FPS = 1;
 var INTERPOLATION = Math.floor(1000/NETWORK_FPS * 1.5);
 var MAX_PLAYER = 50;

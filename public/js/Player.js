@@ -18,6 +18,9 @@ var Player = function(json){
 		v:0
 	};
 
+	this.vRotSpeed = 2 * Math.PI/100;
+	this.maxvRotSpeed = 2 * Math.PI/3;
+
 	this.speed = 5;
 
 	this.radius = 10;
@@ -27,6 +30,8 @@ var Player = function(json){
 
 	this.kills = 0;
 	this.deaths = 0;
+
+	this.mesh;
 
 	this.init(json);
 }
@@ -39,6 +44,10 @@ Player.prototype.init = function(json){
 
 Player.prototype.update = function(){
 	
+}
+
+Player.prototype.spawn = function(){
+	this.position.y = Math.random() * 10000 + 5000;
 }
 
 Player.prototype.getInformations = function(){
