@@ -1,7 +1,7 @@
 var Map = function(){
 	this.ground;
 
-	this.generateGround(10, 10, 0, 200, 4574);
+	this.generateGround(20, 20, 0, 5000, 4574);
 }
 
 Map.prototype.generateGround = function(width, height, min, max, seed){

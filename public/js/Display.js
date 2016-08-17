@@ -61,21 +61,21 @@ Display.prototype.updateSkybox = function(){
 
 Display.prototype.initGround = function(){
 	var ground = this.client.room.map.ground;
-	console.log(ground);
 
-	var geometry = new THREE.PlaneGeometry(500, 500, ground.length - 1, ground[0].length - 1);
+	var geometry = new THREE.PlaneGeometry(500000, 500000, 100, 100);
 
 	for (var i = 0, l = geometry.vertices.length; i < l; i++) {
-  		geometry.vertices[i].y = Math.random() * 100;
+  		geometry.vertices[i].z = -Math.random() * 10000;
 	}
 
 	var material = new THREE.MeshLambertMaterial({
   color: 0xdddddd, 
+   wireframe: true
 });
 
 var plane = new THREE.Mesh(geometry, material);
 plane.position.z += 800;
-plane.rotation.y = 2;
+plane.rotation.x = Math.PI/2;
 
 	this.three.scene.add(plane);
 }
@@ -171,10 +171,13 @@ sphere.position.y -= 300;
 
 Display.prototype.render = function(){
 	if(this.plane){
-		this.plane.rotation.x += 0.1;
-		this.plane.rotation.y += 0.1;
+		this.plane.position.y = 15000;
+		this.plane.position.x += 10;
 	}
-	this.three.camera.position.z += 100;
+	this.three.camera.position.z = 100000;
+	this.three.camera.position.y = 50000;
+	this.three.camera.rotation.x = -Math.PI/8;
+	// this.three.camera.rotation.y += 0.02;
 
 
 	this.updateSkybox();

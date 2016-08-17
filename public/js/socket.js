@@ -7,6 +7,7 @@ $(function(){
 
 	socket.on("playerID", function(data){
 		client.pid = data;
+		vue.connected = true;
 	});
 
 	socket.on("init", function(data){
@@ -15,5 +16,17 @@ $(function(){
 			room.addPlayer(new Player(data.players[i]));
 		}
 		client.room = room;
+		console.log(client);
 	});
+
+	socket.on("snapshot", function(data){
+	});
+
+	socket.on("addPlayer", function(data){
+	});
+
+	socket.on("removePlayer", function(data){
+	});
+
+	
 });

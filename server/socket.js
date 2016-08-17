@@ -23,10 +23,6 @@ io.on('connection', function(socket){
 
 	});
 
-	socket.on("changeRoom", function(data){
-
-	});
-
 	socket.on("inputs", function(data){
 
 	});

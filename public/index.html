@@ -9,7 +9,8 @@
 
 
 <body id="app">
-<div class="connexion">
+<div class="connexion" v-if="!connected">
+	<h1>DogFight.io</h1>
 	<form v-on:submit.prevent="connection">
 		<input type="text" v-model="pseudo">
 		<input type="submit" value="Play">
@@ -23,7 +24,6 @@
 <script src="./js/lib/three.min.js"></script>
 <script src="./js/lib/OBJLoader.js"></script>
 <script src="./js/lib/SeededRandom.js"></script>
-<script src="./js/lib/perlin.js"></script>
 
 <script src="./js/Client.js"></script>
 <script src="./js/Display.js"></script>

@@ -13,7 +13,8 @@ $(function(){
 	vue = new Vue({
 		el:"#app",
 		data:{
-			pseudo:""
+			pseudo:"",
+			connected:false
 		},
 		methods:{
 			connection:function(){
